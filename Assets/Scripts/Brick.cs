@@ -12,12 +12,25 @@ public class Brick : MonoBehaviour
 
     void Start()
     {
+
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        onDestroyed.Invoke(PointValue);
+        
+        //slight delay to be sure the ball have time to bounce
+        Destroy(gameObject, 0.2f);
+    }
+
+    public void ColorBricks()
+    {
         var renderer = GetComponentInChildren<Renderer>();
 
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         switch (PointValue)
         {
-            case 1 :
+            case 1:
                 block.SetColor("_BaseColor", Color.green);
                 break;
             case 2:
@@ -31,13 +44,5 @@ public class Brick : MonoBehaviour
                 break;
         }
         renderer.SetPropertyBlock(block);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        onDestroyed.Invoke(PointValue);
-        
-        //slight delay to be sure the ball have time to bounce
-        Destroy(gameObject, 0.2f);
     }
 }
