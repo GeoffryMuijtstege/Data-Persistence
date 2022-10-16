@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class MenuHandler : MonoBehaviour
 {
     public static MenuHandler mainMenu;
+    public static string directory = "/SaveData/";
+    public static string fileName = "MyData.txt";
     public InputField usernameInput;
     public string playerName;
+    public string highScorePlayerName;
     public Text displayHighscore;
     public int keepHighScore;
     // Start is called before the first frame update
@@ -24,6 +31,7 @@ public class MenuHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
 
@@ -45,6 +53,19 @@ public class MenuHandler : MonoBehaviour
 
     public void SetHighScore(int highscore)
     {
-        keepHighScore = highscore;
+        if (highscore > keepHighScore)
+        {
+            keepHighScore = highscore;
+            highScorePlayerName = playerName;
+            PlayerPrefs.SetInt("HighScore", MenuHandler.mainMenu.keepHighScore);
+            PlayerPrefs.SetString("Name", MenuHandler.mainMenu.highScorePlayerName);
+            PlayerPrefs.GetInt("HighScore");
+            PlayerPrefs.GetString("Name");
+        }
+    }
+
+    public void UpdateHighScoreText()
+    {
+        MainManager.Instance.displayHighscore.text = $"HighScore: {PlayerPrefs.GetInt("HighScore", 0)} by: {PlayerPrefs.GetString("Name", default)}";
     }
 }

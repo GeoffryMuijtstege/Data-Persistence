@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class MainManager : MonoBehaviour
 {
@@ -38,9 +39,8 @@ public class MainManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
-        
     }
+
     private void Start()
     {
         const float step = 0.6f;
@@ -59,8 +59,8 @@ public class MainManager : MonoBehaviour
                 brickScript.ColorBricks();
             }
         }
-
-        displayHighscore.text = "Best Score: " + MenuHandler.mainMenu.keepHighScore + " By: " + MenuHandler.mainMenu.playerName;
+        MenuHandler.mainMenu.UpdateHighScoreText();
+        MenuHandler.mainMenu.keepHighScore = PlayerPrefs.GetInt("HighScore", 0);
     }
     private void Update()
     {
@@ -96,6 +96,6 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-        Instance.highScore = m_Points;
+        highScore = m_Points;
     }
 }
