@@ -810,6 +810,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameInput: {fileID: 1693431159}
   playerName: 
+  highScorePlayerName: 
+  displayHighscore: {fileID: 0}
+  keepHighScore: 0
 --- !u!4 &1191744109
 Transform:
   m_ObjectHideFlags: 0
